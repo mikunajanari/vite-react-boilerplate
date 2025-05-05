@@ -1,29 +1,32 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Створення окремого інстансу Axios
 const api = axios.create({
-    baseURL: import.meta.env['VITE_API_BASE_URL'],
+    baseURL: import.meta.env["VITE_API_BASE_URL"],
     headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     },
 });
 
-// Якщо токен доступний у змінній середовища -- додаємо в Authorization
-const token = import.meta.env['VITE_API_AUTH_TOKEN'];
-if (token) {
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    } else {
+        // Якщо є токен у .env — (наприклад, при тестуванні)
+        const fallbackToken = import.meta.env["VITE_API_AUTH_TOKEN"];
+        if (fallbackToken) {
+            config.headers.Authorization = `Bearer ${fallbackToken}`;
+        }
+    }
+    return config;
+});
 
 // Інтерцептор для відповіді (обробка помилок)
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        // Тут можна додати глобальну обробку помилок, наприклад:
-        console.error('API error:', error.response?.data || error.message);
-
-        // Можна також виводити повідомлення користувачу через toast
-        // toast.error(error.response?.data?.message || 'Unknown error');
-
+        console.error("API error:", error.response?.data || error.message);
         return Promise.reject(error);
     }
 );

@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import { routeTree } from "./routeTree.gen.ts";
 import "./styles/tailwind.css";
 import './common/i18n'
+import { worker } from "./mocks/browser";
 
 const router = createRouter({ routeTree });
 
@@ -14,6 +15,12 @@ declare module "@tanstack/react-router" {
 		router: typeof router;
 	}
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+worker.start().then(() => {
+	// запускаємо React
+	createRoot(document.getElementById("root")!).render(<App />);
+});
 
 const rootElement = document.querySelector("#root") as Element;
 if (!rootElement.innerHTML) {
