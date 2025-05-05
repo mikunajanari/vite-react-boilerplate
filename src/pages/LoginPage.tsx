@@ -17,7 +17,7 @@ export default function LoginPage() {
             const token = response.data.token;
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             localStorage.setItem("token", token); // або sessionStorage.setItem
-            await navigate({to: "/posts"});
+            await navigate({to: "/entities"});
         } catch (error) {
             alert("Login failed");
             console.error(error);
