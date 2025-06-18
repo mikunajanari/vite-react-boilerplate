@@ -16,7 +16,7 @@ export default function LoginPage() {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
             const token = response.data.token;
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            localStorage.setItem("token", token); // або sessionStorage.setItem
+            localStorage.setItem("boilerplate_token", token);
             await navigate({to: "/entities"});
         } catch (error) {
             alert("Login failed");

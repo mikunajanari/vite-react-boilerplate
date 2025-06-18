@@ -23,7 +23,7 @@ export const getEntityById = async (id: number): Promise<Post> => {
 
 // POST /posts
 export const createEntity = async (data: Omit<Post, "id">): Promise<Post> => {
-    const response = await api.post("/post", data);
+    const response = await api.post("/entities", data);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return response.data;
 };

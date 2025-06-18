@@ -49,6 +49,9 @@ export default function EntityForm() {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,unicorn/prevent-abbreviations
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        console.log("Форма відправлена", post);
+        console.log("isNew:", isNew);
+
         if (!post.title || !post.content) {
             alert("Усі поля обов’язкові");
             return;

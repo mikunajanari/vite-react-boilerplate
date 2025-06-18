@@ -9,11 +9,11 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("boilerplate_token");
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     } else {
-        // Якщо є токен у .env — (наприклад, при тестуванні)
+
         const fallbackToken = import.meta.env["VITE_API_AUTH_TOKEN"];
         if (fallbackToken) {
             config.headers.Authorization = `Bearer ${fallbackToken}`;
